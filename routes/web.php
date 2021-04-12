@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +13,74 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//GRUPO DE ROTAS
+/*
+Route::middleware([])->group(function(){
+
+    //Rotas com prefixo
+    Route::prefix('admin')->group(function(){
+
+        //Rotas com namespace
+        Route::namespace('App\Http\Controllers\Admin')->group(function(){
+
+            //Rotas com name
+            Route::name('admin.')->group(function(){
+
+                Route::get('/financeiro', 'TesteController@teste')->name('financeiro');
+    
+                Route::get('/dashboard', 'TesteController@teste')->name('dashboard');
+                
+                Route::get('/produtos', 'TesteController@teste')->name('produtos');
+        
+                Route::get('/', function(){
+                    //redirecionamento através de nome de rota
+                    return redirect()->route('admin.dashboard');
+                })->name('home');
+
+            });
+            
+        });
+
+        
+    });
+    
+    
+});
+*/
+Route::group([
+   'middleware' => [],
+   'prefix' => 'admin',
+   'namespace' => 'App\Http\Controllers\Admin',
+   'name' => 'admin.'
+], function(){
+    Route::get('/financeiro', 'TesteController@teste')->name('financeiro');
+    
+    Route::get('/dashboard', 'TesteController@teste')->name('dashboard');
+                
+    Route::get('/produtos', 'TesteController@teste')->name('produtos');
+        
+    Route::get('/', function(){
+        //redirecionamento através de nome de rota
+        return redirect()->route('admin.dashboard');
+    })->name('home');
+});
+
+Route::get('/login', function(){
+    return 'login';
+})->name('login');
+
+
+
+//ROTAS NOMEADAS
+
+Route::get('/redirect3', function(){
+    return  redirect()->route('url.name');
+});
+Route::get('/name-url', function(){
+    return 'Hey hey hey';
+})->name('url.name');
+
 #Somente no caso de uma view ser simples
 Route::view('/view','welcome');
 
