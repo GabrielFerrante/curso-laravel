@@ -2,20 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 
+//Chamando um controller na ROTA
+Route::get('/products', 'App\Http\Controllers\ProductController@index')->name('products.index');
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::get('/login', function(){
+    return 'login';
+})->name('login');
 
 //GRUPO DE ROTAS
-/*
+
 Route::middleware([])->group(function(){
 
     //Rotas com prefixo
@@ -47,7 +42,7 @@ Route::middleware([])->group(function(){
     
     
 });
-*/
+
 Route::group([
    'middleware' => [],
    'prefix' => 'admin',
@@ -66,14 +61,9 @@ Route::group([
     })->name('home');
 });
 
-Route::get('/login', function(){
-    return 'login';
-})->name('login');
-
-
 
 //ROTAS NOMEADAS
-
+/*
 Route::get('/redirect3', function(){
     return  redirect()->route('url.name');
 });
@@ -92,7 +82,7 @@ Route::redirect('/redirect1', '/redirect2');
 /* Redirecionamento
 Route::get('/redirect1', function(){
     return redirect('/redirect2');
-});*/
+});
 
 //PERMITINDO PARÂMETROS OPCIONAIS
 Route::get('/produtos/{idProduct?}', function($idProduct = ''){
